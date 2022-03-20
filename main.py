@@ -10,6 +10,7 @@ class Login:
         self.root.title("Login System")
         self.root.geometry("1199x700+100+50")
         self.root.resizable(False, False)
+        f = open('accounts.json')
 
         def main_page():
             # Login Frame
@@ -68,9 +69,9 @@ class Login:
 
             def reg():
                 import json
+                con = False
                 username = self.username.get()
                 password = self.password.get()
-                data = {'account:' , username , password}
 
                 with open('accounts.json') as cred_file:
                     table_json = json.load(cred_file)
@@ -78,15 +79,21 @@ class Login:
                 for acc in table_json["accounts"]:
                     if acc["username"] == username:
                         messagebox.showerror("Error", "User already Exists")
+                        con = True
                         break
 
+                if con:
+                    table_json[username] = password
+                    table_json = json.dumps(cred_file, indent=4)
 
 
 
 
 
 
-            # Confirm
+
+
+                        # Confirm
             submit = Button(cursor="hand2", text="Confirm",command = reg,bd=0, font=("Goudy old style", 15), bg="#6162FF",
                             fg="white").place(x=420, y=475, width=180, height=40)
             # return button
@@ -172,7 +179,7 @@ class Login:
 
 root = Tk()
 #Open Image
-bg_pic = Image.open(r"C:\Users\ca8855176\Desktop\idk.jpg")
+bg_pic = Image.open(r"C:\Users\ca8855176\Desktop\idk1.jpg")
 #Resized Image
 #resized = bg_pic.resize((1199, 850), Image.ANTIALIAS)
 

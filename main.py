@@ -86,8 +86,10 @@ class Login:
                         break
 
                 if con:
-                    table_json= json.dump(cred_file, data)
-                    cred_file.close()
+                    with open('accounts.json', 'r+') as cred_file:
+                        json.dump(data, cred_file)
+                        cred_file.write('\n')
+
 
 
 

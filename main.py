@@ -70,7 +70,7 @@ class Login:
                 con = True
                 username = self.username.get()
                 password = self.password.get()
-                data = {"username:":username, "password:":password}
+                data = {"username":username, "password":password}
 
                 with open('accounts.json', 'r+') as cred_file:
                     table_json = json.load(cred_file)
@@ -81,7 +81,7 @@ class Login:
                         con = False
                         break
 
-                    if data["username:"] in acc["username"]:
+                    if data["username"] in acc["username"]:
                         messagebox.showerror("Error", "User already Exists")
                         con = False
                         break
@@ -195,3 +195,4 @@ label_bgImage = Label(root, image=bg)
 label_bgImage.place(x=0, y=0)
 obj = Login(root)
 root.mainloop()
+

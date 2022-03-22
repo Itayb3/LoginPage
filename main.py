@@ -149,8 +149,8 @@ class Login:
                         acc["password"] = password
                         print(acc)
 
-                        with open('accounts.json', 'w'):
-                            json.dumps(acc, indent=4)
+                        with open('accounts.json', 'w') as cred_file:
+                            json.dump(table_json, cred_file, indent=4)
                             main_page()
 
             # Confirm

@@ -10,7 +10,6 @@ class Login:
         self.root.title("Login System")
         self.root.geometry("1199x700+100+50")
         self.root.resizable(False, False)
-        f = open('accounts.json')
 
         def main_page():
             # Login Frame
@@ -68,11 +67,10 @@ class Login:
             self.password.place(x=420, y=390, width=320, height=35)
 
             def reg():
-                import json
                 con = True
                 username = self.username.get()
                 password = self.password.get()
-                data = {'username: ': username, 'password: ': password}
+                data = {"username:":username, "password:":password}
 
                 with open('accounts.json', 'r+') as cred_file:
                     table_json = json.load(cred_file)
@@ -83,7 +81,7 @@ class Login:
                         con = False
                         break
 
-                    if acc["username"] == data['username: ']:
+                    if data["username:"] in acc["username"]:
                         messagebox.showerror("Error", "User already Exists")
                         con = False
                         break

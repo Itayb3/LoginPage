@@ -11,6 +11,8 @@ class Login:
         self.root.geometry("1199x700+100+50")
         self.root.resizable(False, False)
 
+
+
         def main_page():
             # Login Frame
             frame_login = Frame(self.root, bg="white")
@@ -34,16 +36,30 @@ class Login:
             self.password = Entry(frame_login, font=("Goudy old style", 15), bg="#E7E6E6")
             self.password.place(x=90, y=240, width=320, height=35)
 
+
+
+
             # Button
             Button(frame_login, text="forgot password?", command=forgot_password, bd=0, cursor="hand2",
                    font=("Goudy old style", 12), fg="#6162FF", bg="white").place(x=90, y=280)
-            Button(frame_login, cursor="hand2", text="Login", bd=0,
+            Button(frame_login, cursor="hand2", text="Login", bd=0,command=logging_in,
                    font=("Goudy old style", 15), bg="#6162FF", fg="white").place(x=90, y=320, width=180,
                                                                                  height=40)
+
+
 
             # register Button
             Button(frame_login, text="Register", command=register_function, bd=0, cursor="hand2",
                    font=("Goudy old style", 12), fg="#6162FF", bg="white").place(x=350, y=320)
+
+        def End_Page():
+            # Login Frame
+            frame_login = Frame(self.root, bg="white")
+            frame_login.place(x=330, y=150, width=500, height=400)
+
+            # Title & subtitle
+            Label(frame_login, text="Congratulations", font=("Impact", 35, "bold"), fg="#6162FF", bg="white").place(
+                x=90, y=30)
 
         def register_function():
             Register = Frame(self.root, bg="white", )
@@ -183,23 +199,36 @@ class Login:
         self.password = Entry(Frame_login, font=("Goudy old style", 15), bg="#E7E6E6")
         self.password.place(x=90, y=240, width=320, height=35)
 
+        def logging_in():
+            username = self.username.get()
+            print(username)
+            password = self.password.get()
+            print(password)
+            data = {"username": username, "password": password}
+            with open('accounts.json', 'r+') as cred_file:
+                table_json = json.load(cred_file)
+
+            add = True
+
+            for acc in table_json["accounts"]:
+                if data["username"] == acc["username"] and data["password"] == acc["password"]:
+                    messagebox.showinfo(" ","Logged In")
+                    add = False
+                    End_Page()
+            if add:
+                messagebox.showerror("Error","ID or Password are wrong , please try again")
+
+
+
         # Button
         Button(Frame_login, text="forgot password?", command=forgot_password, bd=0, cursor="hand2",
                font=("Goudy old style", 12), fg="#6162FF", bg="white").place(x=90, y=280)
-        Button(Frame_login, cursor="hand2", text="Login", bd=0,  # command=self.check_function
+        Button(Frame_login, cursor="hand2", text="Login", command= logging_in,  bd=0,  # command=self.check_function
                font=("Goudy old style", 15), bg="#6162FF", fg="white").place(x=90, y=320, width=180, height=40)
 
         # register Button
         Button(Frame_login, text="Register", command=register_function, bd=0, cursor="hand2",
                font=("Goudy old style", 12), fg="#6162FF", bg="white").place(x=350, y=320)
-
-    # def check_function(self):
-    # if self.username.get() == "" or self.password.get() == "":
-    #    messagebox.showerror("Error", "All fields are required", parent=self.root)
-    # elif self.username.get() not in UserName or self.password.get() not in Password:
-    # messagebox.showerror("Error", "Invalid Username or Password", parent=self.root)
-    # else:
-    # messagebox.showinfo("Welcome", f"Welcome {self.username.get()}")
 
 
 root = Tk()

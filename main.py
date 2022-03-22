@@ -90,7 +90,7 @@ class Login:
                 if con is True:
                     table_json["accounts"].append(data)
                     with open('accounts.json', 'w') as cred_file:
-                        json.dump(table_json, cred_file)
+                        json.dump(table_json, cred_file, indent=4)
 
 
 

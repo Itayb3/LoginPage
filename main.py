@@ -64,7 +64,7 @@ class Login:
             # Password
             Label(text="Password", font=("Goudy old style", 15, "bold"), fg="grey", bg="white").place(
                 x=420, y=360)
-            self.password = Entry(font=("Goudy old style", 15), bg="#E7E6E6")
+            self.password = Entry(font=("Goudy old style", 15), bg="#E7E6E6", show= '*')
             self.password.place(x=420, y=390, width=320, height=35)
 
             def reg():
@@ -72,22 +72,28 @@ class Login:
                 con = True
                 username = self.username.get()
                 password = self.password.get()
-                data = { }
-                data['Username: '] = username
-                data['Password: '] = password
+                data = {'username: ': username, 'password: ': password}
 
                 with open('accounts.json', 'r+') as cred_file:
                     table_json = json.load(cred_file)
 
                 for acc in table_json["accounts"]:
-                    if acc["username"] == username:
+                    if self.username.get() == "" or self.password.get() == "":
+                        messagebox.showerror("Error", "Please Fill The Required info")
+                        con = False
+                        break
+
+                    if acc["username"] == data['username: ']:
                         messagebox.showerror("Error", "User already Exists")
                         con = False
                         break
 
-                if con:
-                    table_json= json.dump(cred_file, data)
-                    cred_file.close()
+
+                if con is True:
+                    table_json["accounts"].append(data)
+                    with open('accounts.json', 'w') as cred_file:
+                        json.dump(table_json, cred_file)
+
 
 
 

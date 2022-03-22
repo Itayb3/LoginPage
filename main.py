@@ -125,7 +125,7 @@ class Login:
                 data = {"username": ID, "password": password}
                 cond = True
 
-                with open('accounts.json', 'r+') as cred_file:
+                with open('accounts.json', 'r') as cred_file:
                     table_json = json.load(cred_file)
 
 
@@ -146,11 +146,11 @@ class Login:
                 if cond:
                  for acc in table_json["accounts"]:
                      if data["username"] == acc["username"]:
-                        acc["password"].append(password)
+                        acc["password"] = password
                         print(acc)
 
-                        with open('accounts.json', 'w') as cred_file:
-                            json.dumps(table_json, indent=4)
+                        with open('accounts.json', 'w'):
+                            json.dumps(acc, indent=4)
                             main_page()
 
             # Confirm

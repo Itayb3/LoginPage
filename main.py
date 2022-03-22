@@ -96,14 +96,10 @@ class Login:
                    bg="#6162FF", fg="white").place(x=620, y=475, width=100, height=40)
 
         def forgot_password():
-            Ptitle = Frame(self.root, bg="white", )
+            Ptitle = Frame(self.root, bg="white")
             Ptitle.place(x=330, y=150, width=500, height=400)
             Label(text="Password Reset", font=("Impact", 35, "bold"), fg="#6162FF", bg="white").place(x=420,
                                                                                                       y=180)
-            # Username
-            Label(text="ID", font=("Goudy old style", 14, "bold"), fg="grey", bg="white").place(x=420, y=255)
-            self.ID = Entry(font=("Goudy old style", 15), bg="#E7E6E6")
-            self.ID.place(x=420, y=285, width=320, height=35)
 
             # Password
             Label(text="New Password", font=("Goudy old style", 14, "bold"), fg="grey", bg="white").place(
@@ -111,14 +107,55 @@ class Login:
             self.newpass = Entry(font=("Goudy old style", 15), bg="#E7E6E6")
             self.newpass.place(x=420, y=350, width=320, height=35)
 
+            # Username
+            Label(text="ID", font=("Goudy old style", 14, "bold"), fg="grey", bg="white").place(x=420, y=255)
+            self.ID = Entry(font=("Goudy old style", 15), bg="#E7E6E6")
+            self.ID.place(x=420, y=285, width=320, height=35)
+
             # confirm_new_pass
             Label(text="Confirm", font=("Goudy old style", 15, "bold"), fg="grey",
                   bg="white").place(x=420, y=385)
             self.confirm_new_pass = Entry(font=("Goudy old style", 14), bg="#E7E6E6")
             self.confirm_new_pass.place(x=420, y=415, width=320, height=35)
 
+            def pass_change():
+                ID = self.ID.get()
+                password = self.newpass.get()
+                cpassword = self.confirm_new_pass.get()
+                data = {"username": ID, "password": password}
+                cond = True
+
+                with open('accounts.json', 'r+') as cred_file:
+                    table_json = json.load(cred_file)
+
+
+                for acc in table_json["accounts"]:
+
+                    if data["username"] == acc["username"]:
+                        cond = False
+
+                if cond:
+                    messagebox.showerror("Error", "User Dont Exists!")
+
+                if cpassword != password:
+                    messagebox.showerror("Error", "Passwords Dont Match")
+                    cond = False
+                else:
+                    cond = True
+
+                if cond:
+                 for acc in table_json["accounts"]:
+                     if data["username"] == acc["username"]:
+                        acc["password"].append(password)
+                        print(acc)
+
+                        with open('accounts.json', 'w') as cred_file:
+                            json.dumps(table_json, indent=4)
+                            main_page()
+
             # Confirm
-            Button(cursor="hand2", text="Confirm", bd=0, font=("Goudy old style", 15), bg="#6162FF",
+            Button(cursor="hand2", text="Confirm", command=pass_change, bd=0, font=("Goudy old style", 15),
+                   bg="#6162FF",
                    fg="white").place(x=420, y=475, width=180, height=40)
             # return button
             Button(cursor="hand2", text="Return", bd=0, command=main_page, font=("Goudy old style", 15),

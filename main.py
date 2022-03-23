@@ -233,7 +233,7 @@ class Login:
 
 root = Tk()
 # Open Image
-bg_pic = Image.open(r"C:\Users\ca8855176\Desktop\idk1.jpg")
+bg_pic = Image.open(r"idk.jpg")
 # Resized Image
 # resized = bg_pic.resize((1199, 850), Image.ANTIALIAS)
 
